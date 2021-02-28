@@ -3,3 +3,4 @@ node_modules
 docker-compose.yml
 DockerFile
 dump.rdb
+.http
