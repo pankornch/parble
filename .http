@@ -1,0 +1,243 @@
+@HOST=http://localhost:5055
+@token_1=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhdXRoIiwiaWRfIjoiNjAyZThiZDZjZmI1OGI2ZWJmOWE0MDI1IiwiaWF0IjoxNjEzNjYzODkwfQ.bfVGbjp8oLuCIAZhWUxklPIpL5hTrBzAD1ZahmVwnGk
+@token_2=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhdXRoIiwiaWRfIjoiNjAyZWEyM2UxYzM4NzQ3M2UyMjFhZGM1IiwiaWF0IjoxNjEzNjY4OTk1fQ.631oOSXX26Tvsq57ZD7IxorAhn4yf3g-I2MllQTW_-E
+### AUTH
+POST {{HOST}}/api/auth/login HTTP/1.1
+Content-Type: application/json 
+
+{
+    "email": "test@email.com",
+    "password": "test1234"
+}
+
+###
+POST {{HOST}}/api/auth/login_with_facebook HTTP/1.1
+Content-Type: application/json
+
+{
+    "facebookId": "2236737259793176"
+}
+
+###
+POST {{HOST}}/api/auth/register HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "zsy15884@cuoly.com",
+    "password": "test1234",
+    "name": "John Doe",
+    "tel_number": "08131920130"
+}
+
+
+###
+POST {{HOST}}/api/auth/verify_email?verify_code=69629 HTTP/1.1
+Authorization: Bearer {{token_2}}
+
+###
+POST {{HOST}}/api/auth/resend_verify_code HTTP/1.1
+Authorization: Bearer {{token_1}}
+
+
+### USER
+GET {{HOST}}/api/users/me
+Authorization: Bearer {{token_1}}
+
+### 
+PATCH {{HOST}}/api/users
+Authorization: Bearer {{token_2}}
+Content-Type: application/json
+
+{
+    "firstName": "Jordan",
+    "lastName": "Bone",
+    "nickname": "Jo"
+}
+
+###
+PATCH {{HOST}}/api/users/venture HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token_1}}
+
+{
+    "avatar": "https://firebasestorage.googleapis.com/v0/b/partble.appspot.com/o/Avatars%2FCallista1369695910.jpg?alt=media&token=e51baa5d-b6ed-4c2f-bc64-0a8ee434e28b"
+}
+
+
+### 
+GET {{HOST}}/api/users/602ea23e1c387473e221adc5
+Authorization: Bearer {{token_1}}
+
+
+###
+GET {{HOST}}/api/ventures/602e93a4ca3e9770c79d275f/jobs
+Authorization: Bearer {{token_1}}
+
+### JOB
+GET {{HOST}}/api/jobs?q=venture HTTP/1.1
+Authorization: Bearer {{token_2}}
+
+###
+GET {{HOST}}/api/jobs?page=3 HTTP/1.1
+Authorization: Bearer {{token_2}}
+
+###
+GET {{HOST}}/api/jobs/602e9ee325f8ff7316b5e72e HTTP/1.1
+Authorization: Bearer {{token_2}}
+
+
+###
+POST {{HOST}}/api/jobs HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token_1}}
+
+{
+    "title": "Find a Craftsperson",
+    "dept": "Craftsperson",
+    "wage": 800,
+    "description": "Let's make a good table!\nmake a coolest table",
+    "start_time": "10:20",
+    "end_time": "19:30",
+    "welfare": "Free lunch\nfree dinner"
+
+}
+
+###
+PATCH {{HOST}}/api/jobs/602e9ee325f8ff7316b5e72e HTTP/1.1
+Authorization: Bearer {{token_1}}
+Content-Type: application/json
+
+{
+    "images": [
+        "https://image.freepik.com/free-photo/business-job-interview-concept_1421-77.jpg",
+        "https://image.freepik.com/free-vector/job-vacancy-background-flat-style_23-2147883941.jpg"
+    ]
+}
+
+###
+DELETE {{HOST}}/api/jobs/602e9b7a84338d72a6c2e802 HTTP/1.1
+Authorization: Bearer {{token_1}}
+
+
+
+
+### APPLY
+POST {{HOST}}/api/applies
+Authorization: Bearer {{token_2}}
+Content-Type: application/json
+
+{
+    "job_id": "6035ed62f3949de7cef99bd2"
+}
+
+###
+GET {{HOST}}/api/applies?job_id=60378cc3df24de696dd9b411&employee_id=603ac0f8448dae03d0a8f3c6
+Authorization: Bearer {{token_2}}
+
+###
+GET {{HOST}}/api/applies/602e9ee325f8ff7316b5e72e/job
+Authorization: Bearer {{token_2}}
+
+
+###
+GET {{HOST}}/api/applies/venture
+Authorization: Bearer {{token_1}}
+
+
+
+### 
+PATCH {{HOST}}/api/applies/602ea492786ee8749b5a1711
+Authorization: Bearer {{token_1}}
+Content-Type: application/json
+
+{
+    "status": "approve"
+}
+
+###
+DELETE {{HOST}}/api/applies/5b49e3a601834893857c
+Authorization: Bearer {{token_2}}
+
+
+
+### BOOKMARK
+GET {{HOST}}/api/bookmarks HTTP/1.1
+Authorization: Bearer {{token_2}}
+
+
+###
+POST {{HOST}}/api/bookmarks/602e9ee325f8ff7316b5e72e HTTP/1.1
+Authorization: Bearer {{token_1}}
+
+
+###
+DELETE {{HOST}}/api/bookmarks/f8a2c2fa9d4a440694a4 HTTP/1.1
+Authorization: Bearer {{token_2}}
+
+
+### REVIEW
+POST {{HOST}}/api/reviews HTTP/1.1
+Authorization: Bearer {{token_1}}
+Content-Type: application/json
+
+{
+    "applyId": "23d79ec6ab60497ab414",
+    "description": "Good job!!",
+    "rating": 5
+}
+
+
+###
+GET {{HOST}}/api/reviews HTTP/1.1
+Authorization: Bearer {{token_2}}
+
+###
+GET {{HOST}}/api/reviews?employeeId=a7ce51f8965645afa071 HTTP/1.1
+Authorization: Bearer {{token_1}}
+
+###
+PATCH  {{HOST}}/api/reviews/ccb7a64d7832467babb6 HTTP/1.1
+Authorization: Bearer {{token_1}}
+Content-Type: application/json
+
+{
+    "description": "Weldone!!!!"
+}
+
+###
+DELETE {{HOST}}/api/reviews/eb9bab48ffdd4da89bac
+Authorization: Bearer {{token_1}}
+
+### VENTURE
+POST {{HOST}}/api/ventures
+Authorization: Bearer {{token_1}}
+Content-Type: application/json
+
+{
+    "company_name": "Rental Hub",
+    "tel_number": "055555555",
+    "certificate_number": "32183912932130",
+    "type": "Rental",
+    "address": "Bangkok",
+    "avatar": "https://firebasestorage.googleapis.com/v0/b/partble.appspot.com/o/Avatars%2Fbaby-logo-template_23-2148011233.jpg?alt=media&token=7c29c285-a9cb-4cbc-b961-046bed091876"
+}
+
+####
+GET {{HOST}}/api/search?search=Craft
+
+####
+GET {{HOST}}/api/notifications
+Authorization: Bearer {{token_1}}
+
+####
+PUT {{HOST}}/api/notifications/read
+Authorization: Bearer {{token_1}}
+
+###
+GET  {{HOST}}/api/ventures/602e93a4ca3e9770c79d275f/applies?status=completed
+Authorization: Bearer {{token_1}}
+
+###
+GET {{HOST}}/api/users/602ea23e1c387473e221adc5?q=job
+Authorization: Bearer {{token_1}}
+
