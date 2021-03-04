@@ -39,11 +39,12 @@ module.exports.getUser = async (req, res) => {
     const { q, page = 1 } = req.query
 
     if (q === "job") {
-        return Apply.find(
-            {
-                $and: [{ employee: uid },
-                { $or: [{ status: "approve" }, { status: "completed" }] }]
-            })
+        return Apply.find({
+            $and: [
+                { employee: uid },
+                { status: "completed" }
+            ]
+        })
             .populate({ path: "job", populate: "venture" })
             .populate("review")
             .limit(20)

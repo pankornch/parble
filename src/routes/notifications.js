@@ -11,7 +11,7 @@ router.get("/", JWT_AUTH, async (req, res) => {
     const { user } = req;
     const { field } = req.query
     const notification = JSON.parse(await getAsync("Partble:Notifications", user._id.toString()))
-    if (!notification.data?.length) return res.send({ unread: 0, data: [] })
+    if (!notification?.data?.length) return res.send({ unread: 0, data: [] })
 
     notification.data.sort((a, b) => a.created_at > b.created_at ? -1 : 1)
 

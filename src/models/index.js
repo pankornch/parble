@@ -8,6 +8,6 @@ mongoose.connect(mongoURL, {
     useCreateIndex: true
 })
     .then(() => {
-        console.log("Database Connected!!!")
+        console.log("💾 Database Connected!")
     })
     .catch(e => console.error(e))

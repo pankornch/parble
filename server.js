@@ -34,4 +34,4 @@ app.use('/', (require('./src/routes')));
 
 app.use('/', (req, res) => res.status(404).render('index', { err: "Unknown path" }))
 
-server.listen(PORT, "0.0.0.0", () => console.log(`server listening on port: ${PORT}`)); 
+server.listen(PORT, "0.0.0.0", () => console.log(`🚀 server listening on port: ${PORT}`)); 

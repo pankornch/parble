@@ -155,13 +155,14 @@ module.exports.loginWithFacebook = async (req, res) => {
 	const { value, error } = Joi.object({
 		facebook_id: Joi.string().required(),
 		name: Joi.string().required(),
-		avatar: Joi.string().uri().required()
+		avatar: Joi.string().uri().required(),
+		email: Joi.string().required(),
 	}).validate(req.body);
 
 	if (error) return res.sendStatus(400);
 
-	const identity = await Identity.findOne({ adapter: value.facebook_id })
-
+	const identity = await Identity.findOne({ $or: [{ adapter: value.facebook_id }, { email: value.email }] })
+	
 	// if facebookId is exist in db;
 	if (identity) {
 		return User.findOne({ identity: identity._id }, (err, doc) => {
@@ -171,7 +172,7 @@ module.exports.loginWithFacebook = async (req, res) => {
 	}
 
 	// if facebook is not exist in db; -> create user
-	const identityDoc = await Identity.create({ strategy: "facebook", adapter: value.facebook_id, is_verify: true, verified_at: Date.now() })
+	const identityDoc = await Identity.create({ strategy: "facebook", adapter: value.facebook_id, email: value.email, is_verify: true, verified_at: Date.now() })
 	const userDoc = await User.create({ identity: identityDoc._id, name: value.name, avatar: value.avatar })
 
 	res.json({

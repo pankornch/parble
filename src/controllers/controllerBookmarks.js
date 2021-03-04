@@ -47,7 +47,7 @@ module.exports.createBookmark = async (req, res) => {
 
 // ------------------------- DELETE -------------------------
 
-// ------------------------- Delete Bookmakr -------------------------
+// ------------------------- Delete Bookmark -------------------------
 
 module.exports.deleteBookmark = (req, res) => {
     const { bookmark_id } = req.params
